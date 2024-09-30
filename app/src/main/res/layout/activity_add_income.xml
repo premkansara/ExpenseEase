@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- EditText for entering the income amount -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Income Amount"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/incomeAmountInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter income amount"
+        android:inputType="numberDecimal"
+        android:layout_marginTop="8dp"/>
+
+    <!-- EditText for entering income source -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Enter Source of Income"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/incomeSourceInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter income source"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Button to submit the income -->
+    <Button
+        android:id="@+id/submitIncomeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit Income"
+        android:layout_marginTop="24dp"/>
+</LinearLayout>

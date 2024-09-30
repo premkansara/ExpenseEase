@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Custom Category Section (Already implemented) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Custom Category" />
+
+    <EditText
+        android:id="@+id/customCategoryInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter new category" />
+
+    <Button
+        android:id="@+id/addCategoryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Category"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Custom Tag Section (Already implemented) -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Custom Tag"
+        android:layout_marginTop="24dp"/>
+
+    <EditText
+        android:id="@+id/customTagInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter new tag" />
+
+    <Button
+        android:id="@+id/addTagButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Tag"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Section for Changing/Removing PIN -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PIN Settings"
+        android:layout_marginTop="24dp"/>
+
+    <Button
+        android:id="@+id/changePinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Change PIN"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/removePinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Remove PIN"
+        android:layout_marginTop="16dp"/>
+</LinearLayout>
