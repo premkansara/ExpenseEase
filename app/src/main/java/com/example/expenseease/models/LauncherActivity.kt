@@ -15,7 +15,7 @@ class LauncherActivity : AppCompatActivity() {
 
         if (storedPin == null) {
             // Redirect to PIN setup if no PIN is found
-            val intent = Intent(this, PinSetupActivity::class.java)
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         } else {
             // Redirect to PIN authentication if a PIN exists

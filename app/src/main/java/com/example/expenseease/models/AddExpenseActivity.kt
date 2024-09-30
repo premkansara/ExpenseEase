@@ -22,6 +22,7 @@ class AddExpenseActivity : AppCompatActivity() {
         val amountInput: EditText = findViewById(R.id.amountInput)
         val categorySpinner: Spinner = findViewById(R.id.categorySpinner)
         val tagSpinner: Spinner = findViewById(R.id.tagSpinner)
+        val notes: EditText = findViewById(R.id.noteInput)
 
         // Load default and custom categories
         val categories = loadCustomItems("customCategories", listOf("Food", "Transport", "Groceries", "Entertainment"))
@@ -43,10 +44,11 @@ class AddExpenseActivity : AppCompatActivity() {
             val amountText = amountInput.text.toString()
             val selectedCategory = categorySpinner.selectedItem.toString()
             val selectedTag = tagSpinner.selectedItem.toString()
+            val noteText = notes.text.toString()
 
             if (amountText.isNotEmpty()) {
                 val amount = amountText.toDouble()
-                val newExpense = Expense(0, amount, selectedCategory, selectedTag, null)
+                val newExpense = Expense(0, amount, selectedCategory, selectedTag, noteText)
                 saveExpense(newExpense)
                 Toast.makeText(this, "Expense added: $amount", Toast.LENGTH_LONG).show()
                 finish()

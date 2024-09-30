@@ -53,6 +53,14 @@
         android:layout_marginTop="24dp"/>
 
     <Button
+        android:id="@+id/setPinButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set PIN"
+        android:layout_marginTop="16dp"
+        android:enabled="true" />
+
+    <Button
         android:id="@+id/changePinButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,4 +73,6 @@
         android:layout_height="wrap_content"
         android:text="Remove PIN"
         android:layout_marginTop="16dp"/>
+
+
 </LinearLayout>

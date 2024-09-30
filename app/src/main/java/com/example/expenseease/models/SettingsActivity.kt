@@ -24,16 +24,21 @@ class SettingsActivity : AppCompatActivity() {
 
         val changePinButton: Button = findViewById(R.id.changePinButton)
         val removePinButton: Button = findViewById(R.id.removePinButton)
+        val setPinButton: Button = findViewById(R.id.setPinButton)  // New Set PIN Button
 
         // Load PIN from SharedPreferences
         val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
         val storedPin = sharedPreferences.getString("pin", null)
 
-        // Disable "Change PIN" button if there's no PIN
+        // Enable/Disable buttons based on whether a PIN exists
         if (storedPin == null) {
-            changePinButton.isEnabled = false  // Disable the button
+            changePinButton.isEnabled = false  // Disable "Change PIN" button
+            removePinButton.isEnabled = false  // Disable "Remove PIN" button
+            setPinButton.isEnabled = true      // Enable "Set PIN" button
         } else {
-            changePinButton.isEnabled = true  // Enable the button
+            changePinButton.isEnabled = true   // Enable "Change PIN" button
+            removePinButton.isEnabled = true   // Enable "Remove PIN" button
+            setPinButton.isEnabled = false     // Disable "Set PIN" button
         }
 
         // Existing logic for adding categories and tags
@@ -65,8 +70,15 @@ class SettingsActivity : AppCompatActivity() {
         // Button to remove PIN
         removePinButton.setOnClickListener {
             showRemovePinDialog()
-            // After removing the PIN, disable the "Change PIN" button
+            // After removing the PIN, disable the "Change PIN" button and enable "Set PIN"
             changePinButton.isEnabled = false
+            removePinButton.isEnabled = false
+            setPinButton.isEnabled = true
+        }
+
+        // Button to set a new PIN
+        setPinButton.setOnClickListener {
+            showSetPinDialog()
         }
     }
 
@@ -85,7 +97,34 @@ class SettingsActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    // Function to handle PIN change
+    // Function to handle setting a new PIN
+    private fun showSetPinDialog() {
+        val builder = AlertDialog.Builder(this)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_set_pin, null)  // New dialog layout for setting PIN
+        builder.setView(dialogView)
+
+        val newPinInput = dialogView.findViewById<EditText>(R.id.newPinInput)
+        val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
+
+        builder.setPositiveButton("Set") { _, _ ->
+            val newPin = newPinInput.text.toString()
+            if (newPin.length == 4) {
+                sharedPreferences.edit().putString("pin", newPin).apply()
+                Toast.makeText(this, "PIN set successfully!", Toast.LENGTH_SHORT).show()
+
+                // After setting the PIN, update button states
+                findViewById<Button>(R.id.changePinButton).isEnabled = true
+                findViewById<Button>(R.id.removePinButton).isEnabled = true
+                findViewById<Button>(R.id.setPinButton).isEnabled = false
+            } else {
+                Toast.makeText(this, "PIN must be 4 digits", Toast.LENGTH_SHORT).show()
+            }
+        }
+        builder.setNegativeButton("Cancel", null)
+        builder.show()
+    }
+
+    // Function to handle PIN change (existing)
     private fun showChangePinDialog() {
         val builder = AlertDialog.Builder(this)
         val dialogView = layoutInflater.inflate(R.layout.dialog_change_pin, null)
@@ -111,7 +150,7 @@ class SettingsActivity : AppCompatActivity() {
         builder.show()
     }
 
-    // Function to handle PIN removal
+    // Function to handle PIN removal (existing)
     private fun showRemovePinDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to remove the PIN?")
@@ -119,6 +158,11 @@ class SettingsActivity : AppCompatActivity() {
             val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
             sharedPreferences.edit().remove("pin").apply()
             Toast.makeText(this, "PIN removed", Toast.LENGTH_SHORT).show()
+
+            // After removing the PIN, update button states
+            findViewById<Button>(R.id.changePinButton).isEnabled = false
+            findViewById<Button>(R.id.removePinButton).isEnabled = false
+            findViewById<Button>(R.id.setPinButton).isEnabled = true
         }
         builder.setNegativeButton("No", null)
         builder.show()

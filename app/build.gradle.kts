@@ -52,28 +52,6 @@ dependencies {
     androidTestImplementation(libs.androidx.runner)
     androidTestImplementation(libs.androidx.rules)
 
-    // Optional: If you're testing intents
-    androidTestImplementation(libs.espresso.intents)
-
-    // Optional: If you're testing with RecyclerView
-    androidTestImplementation(libs.androidx.espresso.contrib)
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-
-    // JUnit and Hamcrest for assertions
-    androidTestImplementation("androidx.test.ext:junit:1.1.3")
-    androidTestImplementation("org.hamcrest:hamcrest-library:2.2")
-
-    // Optional: Mockito for mocking
-    androidTestImplementation("org.mockito:mockito-core:3.9.0")
-    // JUnit for testing
-    testImplementation(libs.junit)
-
-    // For AndroidX JUnit
-    androidTestImplementation(libs.androidx.junit.v113)
-
-    // If you need to deal with asynchronous UI changes
-    androidTestImplementation(libs.androidx.espresso.idling.resource)
-    testImplementation(libs.robolectric)
 
 
 }

@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".models.PinSetupActivity" />
         <activity android:name=".models.PinAuthenticationActivity" />
         <activity android:name=".models.MainActivity" />
 
