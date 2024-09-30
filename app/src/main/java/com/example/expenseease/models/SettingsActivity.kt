@@ -21,10 +21,11 @@ class SettingsActivity : AppCompatActivity() {
         val addCategoryButton: Button = findViewById(R.id.addCategoryButton)
         val customTagInput: EditText = findViewById(R.id.customTagInput)
         val addTagButton: Button = findViewById(R.id.addTagButton)
+        val clearAllDataButton: Button = findViewById(R.id.clearAllDataButton)
 
+        val setPinButton: Button = findViewById(R.id.setPinButton)
         val changePinButton: Button = findViewById(R.id.changePinButton)
         val removePinButton: Button = findViewById(R.id.removePinButton)
-        val setPinButton: Button = findViewById(R.id.setPinButton)  // New Set PIN Button
 
         // Load PIN from SharedPreferences
         val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
@@ -32,13 +33,13 @@ class SettingsActivity : AppCompatActivity() {
 
         // Enable/Disable buttons based on whether a PIN exists
         if (storedPin == null) {
-            changePinButton.isEnabled = false  // Disable "Change PIN" button
-            removePinButton.isEnabled = false  // Disable "Remove PIN" button
-            setPinButton.isEnabled = true      // Enable "Set PIN" button
+            setPinButton.isEnabled = true
+            changePinButton.isEnabled = false
+            removePinButton.isEnabled = false
         } else {
-            changePinButton.isEnabled = true   // Enable "Change PIN" button
-            removePinButton.isEnabled = true   // Enable "Remove PIN" button
-            setPinButton.isEnabled = false     // Disable "Set PIN" button
+            setPinButton.isEnabled = false
+            changePinButton.isEnabled = true
+            removePinButton.isEnabled = true
         }
 
         // Existing logic for adding categories and tags
@@ -63,22 +64,22 @@ class SettingsActivity : AppCompatActivity() {
         }
 
         // Button to change PIN
+        setPinButton.setOnClickListener {
+            showSetPinDialog()
+        }
+
+        // Set up the Change PIN button logic
         changePinButton.setOnClickListener {
             showChangePinDialog()
         }
 
-        // Button to remove PIN
+        // Set up the Remove PIN button logic
         removePinButton.setOnClickListener {
             showRemovePinDialog()
-            // After removing the PIN, disable the "Change PIN" button and enable "Set PIN"
-            changePinButton.isEnabled = false
-            removePinButton.isEnabled = false
-            setPinButton.isEnabled = true
         }
 
-        // Button to set a new PIN
-        setPinButton.setOnClickListener {
-            showSetPinDialog()
+        clearAllDataButton.setOnClickListener {
+            showClearAllDataDialog()
         }
     }
 
@@ -154,17 +155,56 @@ class SettingsActivity : AppCompatActivity() {
     private fun showRemovePinDialog() {
         val builder = AlertDialog.Builder(this)
         builder.setMessage("Are you sure you want to remove the PIN?")
+
         builder.setPositiveButton("Yes") { _, _ ->
+            // Perform PIN removal only after user confirms
             val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
             sharedPreferences.edit().remove("pin").apply()
-            Toast.makeText(this, "PIN removed", Toast.LENGTH_SHORT).show()
 
-            // After removing the PIN, update button states
+            // After removing the PIN, disable the "Change PIN" and "Remove PIN" buttons, enable "Set PIN" button
+            val changePinButton: Button = findViewById(R.id.changePinButton)
+            val removePinButton: Button = findViewById(R.id.removePinButton)
+            val setPinButton: Button = findViewById(R.id.setPinButton)
+
+            changePinButton.isEnabled = false
+            removePinButton.isEnabled = false
+            setPinButton.isEnabled = true
+
+            Toast.makeText(this, "PIN removed", Toast.LENGTH_SHORT).show()
+        }
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()  // Do nothing, just close the dialog
+        }
+        builder.show()
+    }
+
+    private fun showClearAllDataDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setMessage("Are you sure you want to clear all data? This action cannot be undone.")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            clearAllData()
+            findViewById<Button>(R.id.setPinButton).isEnabled = true
             findViewById<Button>(R.id.changePinButton).isEnabled = false
             findViewById<Button>(R.id.removePinButton).isEnabled = false
-            findViewById<Button>(R.id.setPinButton).isEnabled = true
+            Toast.makeText(this, "All data cleared", Toast.LENGTH_SHORT).show()
         }
-        builder.setNegativeButton("No", null)
+
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()  // Just close the dialog without doing anything
+        }
+
         builder.show()
+    }
+
+    private fun clearAllData() {
+        val sharedPreferences = getSharedPreferences("expenseEase", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+
+        // Clear all the data stored in SharedPreferences
+        editor.clear()
+        editor.apply()
+
     }
 }
