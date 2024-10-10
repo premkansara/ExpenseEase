@@ -30,8 +30,8 @@
         <activity android:name=".models.AddExpenseActivity" />
         <activity android:name=".models.AddIncomeActivity" />
 
-
     </application>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
 
 

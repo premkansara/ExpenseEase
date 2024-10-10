@@ -11,7 +11,7 @@ import org.junit.Rule
 import org.junit.Test
 
 
-class AddExpenseEspressoTest {
+class AddExpenseTest {
 
     @get:Rule
     var activityScenarioRule = ActivityScenarioRule(AddExpenseActivity::class.java)
