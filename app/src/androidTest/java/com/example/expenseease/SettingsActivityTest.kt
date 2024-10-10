@@ -16,6 +16,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
+/**
+ * Created by Prem on 10/08/2024
+ */
 @RunWith(AndroidJUnit4::class)
 class SettingsActivityTest {
 
